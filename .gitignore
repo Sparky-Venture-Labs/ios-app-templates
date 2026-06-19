@@ -1,0 +1,7 @@
+.DS_Store
+*.log
+.env
+xcuserdata/
+DerivedData/
+*.xcworkspace
+Pods/
