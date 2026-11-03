@@ -1,6 +1,6 @@
 # ios-app-templates
 
-A few SwiftUI views and extensions I kept rewriting, pulled out so I can drop them into a new app. No packages and
+A few SwiftUI views and extensions we kept rewriting, pulled out so we can drop them into a new app. No packages and
 no dependencies: copy the file you want into your project.
 
 Needs iOS 16 or later and Swift 5.9 (Xcode 15 or later).
