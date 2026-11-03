@@ -17,7 +17,7 @@ Needs iOS 16 or later and Swift 5.9 (Xcode 15 or later).
 
 | File | What it adds |
 |---|---|
-| `Extensions/Color+Hex.swift` | `Color(hex: "#3b82f6")`, with 3, 6 or 8 hex digits (8 includes alpha). Anything else comes out black |
+| `Extensions/Color+Hex.swift` | `Color(hex: "#3b82f6")`, with 3, 6 or 8 hex digits (8 digits put alpha first: AARRGGBB). Anything else comes out black |
 | `Extensions/View+Conditional.swift` | `.if(condition) { ... }` to apply a modifier only when a condition is true. It also has `ifAvailable(_:)`, which checks for iOS 16 no matter which version you pass |
 
 ## Example
