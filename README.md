@@ -1,56 +1,49 @@
 # ios-app-templates
 
-Reusable SwiftUI components and patterns for iOS app development. Generic building blocks — nothing app-specific, just patterns that show up in almost every project.
+A few SwiftUI views and extensions I kept rewriting, pulled out so I can drop them into a new app. No packages and
+no dependencies: copy the file you want into your project.
 
-Requires iOS 16+ and Xcode 15+.
-
----
+Needs iOS 16 or later and Swift 5.9 (Xcode 15 or later).
 
 ## Components
 
-| Component | What it is |
+| File | What it is | Use |
+|---|---|---|
+| `Components/EmptyStateView.swift` | Placeholder for an empty list: SF Symbol, title, message, and an optional button | `EmptyStateView(icon: "tray", title: "Nothing here", message: "Add something to get started")` |
+| `Components/LoadingOverlay.swift` | Dimmed full-screen overlay with a spinner and a message, shown while a binding is true | `LoadingOverlay(isLoading: $isLoading, message: "Saving...")` |
+| `Components/ToastNotification.swift` | A toast that slides up from the bottom and hides itself after 2.5 seconds (adjustable) | `ToastNotification(message: "Saved", isShowing: $showToast)` |
+
+## Extensions
+
+| File | What it adds |
 |---|---|
-| `OnboardingFlow` | Multi-step onboarding with page indicators |
-| `SettingsView` | Standard settings page with sections and toggles |
-| `LoadingOverlay` | Full-screen loading state with activity indicator |
-| `EmptyStateView` | Empty list/collection placeholder with icon and message |
-| `ToastNotification` | Non-blocking toast notification from bottom of screen |
-| `ConfirmationSheet` | Bottom sheet confirmation dialog |
+| `Extensions/Color+Hex.swift` | `Color(hex: "#3b82f6")`, with 3, 6 or 8 hex digits (8 includes alpha). Anything else comes out black |
+| `Extensions/View+Conditional.swift` | `.if(condition) { ... }` to apply a modifier only when a condition is true. It also has `ifAvailable(_:)`, which checks for iOS 16 no matter which version you pass |
 
----
-
-## Usage
-
-Each component is self-contained in its own Swift file. Copy the file into your project and use directly — no package dependencies.
+## Example
 
 ```swift
-// Example — ToastNotification
-ToastNotification(message: "Saved successfully", isShowing: $showToast)
+struct ContentView: View {
+    @State private var items: [String] = []
+    @State private var showToast = false
+
+    var body: some View {
+        ZStack {
+            if items.isEmpty {
+                EmptyStateView(icon: "tray", title: "No items", message: "Tap Add to make one",
+                               actionTitle: "Add", action: {
+                                   items.append("New item")
+                                   showToast = true
+                               })
+            } else {
+                List(items, id: \.self) { Text($0) }
+            }
+            ToastNotification(message: "Added", isShowing: $showToast)
+        }
+    }
+}
 ```
 
----
+## License
 
-## Structure
-
-```
-ios-app-templates/
-├── Components/
-│   ├── OnboardingFlow.swift
-│   ├── SettingsView.swift
-│   ├── LoadingOverlay.swift
-│   ├── EmptyStateView.swift
-│   ├── ToastNotification.swift
-│   └── ConfirmationSheet.swift
-└── Extensions/
-    ├── Color+Hex.swift
-    ├── View+Conditional.swift
-    └── String+Validation.swift
-```
-
----
-
-## Requirements
-
-- iOS 16+
-- Xcode 15+
-- Swift 5.9+
+MIT. See [LICENSE](LICENSE).
